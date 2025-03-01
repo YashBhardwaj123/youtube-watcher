@@ -68,7 +68,7 @@ function App() {
 
   const handleAddPlaylist = async () => {
     try {
-      const response = await fetch(`https://playlist-watcher-backend.onrender.com/api/playlist?url=${playlistUrl}`);
+      const response = await fetch(`http://localhost:5000/api/playlist?url=${playlistUrl}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -87,7 +87,7 @@ function App() {
       setPlaylistUrl('');
     } catch (error) {
       console.error('Error fetching playlist:', error);
-      alert(`Something went wrong: ${error.message}. Check the console or verify your backend on Render.`);
+      alert(`Something went wrong: ${error.message}. Check the console or verify your backend locally.`);
     }
   };
 
