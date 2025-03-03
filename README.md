@@ -1,8 +1,18 @@
 # 📺 Playlist Watcher
 
-🚀 **A YouTube Playlist Tracker** that helps you organize and track your learning progress!
+## 📌 About Playlist Watcher
 
-![Image](https://github.com/user-attachments/assets/19e98572-06e6-4b46-a0b1-f7b04edecba8)  
+🚀 **Playlist Watcher** is a **powerful and ad-free** YouTube playlist tracker designed to enhance your learning experience. Whether you're following coding tutorials, music playlists, or educational series, **this app helps you stay organized and track your progress seamlessly.**  
+
+### ✨ Why Use Playlist Watcher?  
+✔ **Track Your Learning Progress** – Know how many videos you've watched.  
+✔ **Smart Playlist Management** – Save and access playlists easily.  
+✔ **Ad-Free Watching Experience** – Focus on learning without distractions.  
+✔ **Dark Mode / Light Mode** – Comfortable viewing for all users.  
+✔ **Auto-Play Next Video** – Seamless binge-learning experience.  
+✔ **Fully Responsive UI** – Works on desktop, tablet, and mobile.  
+
+🎯 **Never lose track of your learning journey again – use Playlist Watcher to stay on top of your progress!** 🚀  
 
 ## 🌟 Features  
 ✅ **Track YouTube Playlists**  
