@@ -23,8 +23,7 @@
 ![Render](https://img.shields.io/badge/Deployed%20on-Render-blue?style=for-the-badge&logo=render)  
 
 ## 📸 Screenshots  
-![Dashboard](https://your-image-url.com)  
-_🎥 Dark Mode & Light Mode Supported!_  
+![Image](https://github.com/user-attachments/assets/b76756ac-0235-4934-b5a3-89a7dc8ccfb4)_🎥 Dark Mode & Light Mode Supported!_  
 
 ## 🛠 Installation  
 **1️⃣ Clone the Repository:**  
