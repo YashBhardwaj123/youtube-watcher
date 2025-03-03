@@ -2,7 +2,7 @@
 
 🚀 **A YouTube Playlist Tracker** that helps you organize and track your learning progress!
 
-![Playlist Watcher](https://your-image-url.com)  
+![Image](https://github.com/user-attachments/assets/19e98572-06e6-4b46-a0b1-f7b04edecba8)  
 
 ## 🌟 Features  
 ✅ **Track YouTube Playlists**  
