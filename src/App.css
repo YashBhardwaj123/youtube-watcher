@@ -85,14 +85,14 @@ h1 {
   color: #2a2a2a;
   font-size: 1rem;
   outline: none;
-  transition: all 0.3s ease; /* Smooth transition for all properties */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle default shadow */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .search-bar input:hover {
-  transform: scale(1.02); /* Slight scale on hover */
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2); /* Increased shadow on hover */
-  border-color: #444; /* Darker border on hover */
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
+  border-color: #444;
 }
 
 .App.dark .search-bar input {
@@ -102,8 +102,8 @@ h1 {
 }
 
 .App.dark .search-bar input:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark mode */
-  border-color: #666; /* Darker border in dark mode */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-color: #666;
 }
 
 button {
@@ -170,14 +170,14 @@ td button {
   color: #fff;
   border-radius: 6px;
   font-size: 0.9rem;
-  transition: all 0.3s ease; /* Smooth transition for all properties */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle default shadow */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 td button:hover {
-  transform: scale(1.05); /* Slight scale on hover */
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2); /* Increased shadow on hover */
-  background: #444; /* Darker background on hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
+  background: #444;
 }
 
 .App.dark td button {
@@ -185,8 +185,8 @@ td button:hover {
 }
 
 .App.dark td button:hover {
-  background: #888; /* Lighter background in dark mode on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark mode */
+  background: #888;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 th {
@@ -235,8 +235,8 @@ tr:hover {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease; /* Smooth transition for all properties */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle default shadow */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   margin-bottom: 30px;
   display: block;
   margin-left: auto;
@@ -244,9 +244,9 @@ tr:hover {
 }
 
 .back-button:hover {
-  transform: scale(1.05); /* Slight scale on hover */
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2); /* Increased shadow on hover */
-  background: #444; /* Darker background on hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
+  background: #444;
 }
 
 .App.dark .back-button {
@@ -254,8 +254,8 @@ tr:hover {
 }
 
 .App.dark .back-button:hover {
-  background: #888; /* Lighter background in dark mode on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark mode */
+  background: #888;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Player Container */
@@ -333,15 +333,15 @@ tr:hover {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  transition: all 0.3s ease; /* Smooth transition for all properties */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle default shadow */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .playlist li:hover {
-  transform: scale(1.02); /* Slight scale on hover */
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2); /* Increased shadow on hover */
-  opacity: 0.9; /* Slight opacity decrease for subtle effect */
-  background: #f0f0f0; /* Lighter background on hover */
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
+  opacity: 0.9;
+  background: #f0f0f0;
 }
 
 .playlist li.active {
@@ -364,8 +364,8 @@ tr:hover {
 }
 
 .App.dark .playlist li:hover {
-  background: #3a3a3a; /* Darker background in dark mode on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark mode */
+  background: #3a3a3a;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .App.dark .playlist li.active {
@@ -389,13 +389,13 @@ tr:hover {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease; /* Smooth transition for all properties */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle default shadow */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .dark-mode-button:hover {
-  transform: scale(1.05); /* Slight scale on hover */
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2); /* Increased shadow on hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
   background: #444;
 }
 
@@ -404,8 +404,8 @@ tr:hover {
 }
 
 .App.dark .dark-mode-button:hover {
-  background: #888; /* Lighter background in dark mode on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark mode */
+  background: #888;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Logout Button */
@@ -421,13 +421,13 @@ tr:hover {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease; /* Smooth transition for all properties */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle default shadow */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .logout-button:hover {
-  transform: scale(1.05); /* Slight scale on hover */
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2); /* Increased shadow on hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
   background: #444;
 }
 
@@ -436,8 +436,8 @@ tr:hover {
 }
 
 .App.dark .logout-button:hover {
-  background: #888; /* Lighter background in dark mode on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark mode */
+  background: #888;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Login Page */
@@ -451,11 +451,11 @@ tr:hover {
   max-width: 1365px;
   margin: 0 auto;
   padding: 40px;
-  background: #f9f9f9; /* Cream for light mode */
+  background: #f9f9f9;
 }
 
 .App.dark .login-container {
-  background: #1a1a1a; /* Dark for dark mode */
+  background: #1a1a1a;
 }
 
 .login-container h1 {
@@ -477,8 +477,8 @@ tr:hover {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 400px; /* Clean, centered form width */
-  gap: 15px; /* Even spacing between elements */
+  max-width: 400px;
+  gap: 15px;
 }
 
 .login-label {
@@ -488,12 +488,12 @@ tr:hover {
   color: #2a2a2a;
   font-size: 1rem;
   margin-bottom: 10px;
-  transition: opacity 0.3s ease, color 0.3s ease; /* Smooth transition for opacity and color */
+  transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .login-label:hover {
-  opacity: 0.9; /* Slight opacity decrease on hover for subtle effect */
-  color: #444; /* Darker color on hover */
+  opacity: 0.9;
+  color: #444;
 }
 
 .App.dark .login-label {
@@ -501,7 +501,7 @@ tr:hover {
 }
 
 .App.dark .login-label:hover {
-  color: #888; /* Lighter color in dark mode on hover */
+  color: #888;
 }
 
 .login-input {
@@ -514,14 +514,14 @@ tr:hover {
   color: #2a2a2a;
   font-size: 1rem;
   outline: none;
-  transition: all 0.3s ease; /* Smooth transition for all properties */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle default shadow */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .login-input:hover {
-  transform: scale(1.02); /* Slight scale on hover */
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2); /* Increased shadow on hover */
-  border-color: #444; /* Darker border on hover */
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
+  border-color: #444;
 }
 
 .App.dark .login-input {
@@ -531,8 +531,8 @@ tr:hover {
 }
 
 .App.dark .login-input:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark mode */
-  border-color: #666; /* Darker border in dark mode */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-color: #666;
 }
 
 .login-input::placeholder {
@@ -552,16 +552,16 @@ tr:hover {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease; /* Smooth transition for all properties */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle default shadow */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   width: 100%;
   max-width: 150px;
 }
 
 .login-button:hover {
-  transform: scale(1.05); /* Slight scale on hover */
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2); /* Increased shadow on hover */
-  background: #444; /* Darker background on hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
+  background: #444;
 }
 
 .App.dark .login-button {
@@ -569,8 +569,8 @@ tr:hover {
 }
 
 .App.dark .login-button:hover {
-  background: #888; /* Lighter background in dark mode on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark mode */
+  background: #888;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .error {
