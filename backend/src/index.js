@@ -10,8 +10,15 @@ const API_KEY = process.env.YOUTUBE_API_KEY || 'AIzaSyBtjJqRFnmda_uYr8IdVaRaQLBH
 console.log('Setting up middleware...');
 app.use(express.json());
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  const allowedOrigins = ['http://localhost:3000', 'https://playlist-watcher-frontend.onrender.com'];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  } else {
+    res.header('Access-Control-Allow-Origin', '*'); // Fallback for other origins
+  }
   res.header('Access-Control-Allow-Methods', 'GET, POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
 
