@@ -1,586 +1,511 @@
-/* Reset and Base */
+/* Modern CSS Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0056b3;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --light-bg: #ffffff;
+  --dark-bg: #1a1a1a;
+  --light-text: #333333;
+  --dark-text: #ffffff;
+  --border-color: #e0e0e0;
+  --dark-border: #333333;
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --dark-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--light-text);
+  background-color: var(--light-bg);
+  transition: var(--transition);
+}
+
+body.dark {
+  color: var(--dark-text);
+  background-color: var(--dark-bg);
+}
+
+/* App Container */
 .App {
-  font-family: 'Inter', sans-serif;
-  background: #f9f9f9; /* Cream background (light theme) */
-  color: #2a2a2a; /* Dark gray (almost black) text (light theme) */
   min-height: 100vh;
-  padding: 40px;
+  padding: 20px;
+  transition: var(--transition);
+}
+
+/* Header and Navigation */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-title {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  position: relative; /* For positioning buttons */
-  transition: background 0.3s, color 0.3s;
+  align-items: flex-start;
 }
 
-.App.dark {
-  background: #1a1a1a; /* Dark background */
-  color: #ffffff; /* White text */
+.creator-name {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+  margin-top: 0.2rem;
 }
 
-/* Dashboard and Playlist Containers */
-.dashboard-container, .playlist-container {
-  width: 100%;
-  max-width: 1365px;
-  margin: 0 auto;
+.dark .creator-name {
+  color: #888;
 }
 
-.App.dark .dashboard-container, .App.dark .playlist-container {
-  background: #1a1a1a;
-}
-
-/* Homepage */
-h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #2a2a2a;
-  text-align: center;
-  margin-bottom: 30px;
-  max-width: 100%;
-  overflow-wrap: break-word;
-}
-
-.App.dark h1 {
-  color: #ffffff;
-}
-
-/* Playlist View Specific h1 */
-.playlist-container h1 {
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 20px;
-}
-
-/* Ensure playlist container isn’t affected by h1 width */
-.playlist-container {
+.header-buttons {
   display: flex;
-  flex-direction: column;
+  gap: 1rem;
   align-items: center;
-  width: 100%;
 }
 
-.search-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
-  width: 100%;
-  max-width: 100%;
+.reset-button {
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
 }
 
-/* Search Bar Input */
-.search-bar input {
-  padding: 12px 20px;
-  width: 350px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px 0 0 8px;
-  background: #fff;
-  color: #2a2a2a;
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+.reset-button:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
 }
 
-.search-bar input:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
-  border-color: #444;
+.dark-mode-button {
+  padding: 8px 16px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
 }
 
-.App.dark .search-bar input {
+.dark-mode-button:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* Login Container */
+.login-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.5s ease;
+}
+
+.dark .login-container {
   background: #2a2a2a;
-  border-color: #3a3a3a;
-  color: #ffffff;
+  box-shadow: var(--dark-shadow);
 }
 
-.App.dark .search-bar input:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  border-color: #666;
+.login-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
 }
 
+/* Form Elements */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: var(--transition);
+  background: white;
+  color: var(--light-text);
+}
+
+.dark input {
+  background: #333;
+  border-color: var(--dark-border);
+  color: var(--dark-text);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Buttons */
 button {
   padding: 12px 24px;
-  background: #2a2a2a;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: white;
   border: none;
-  border-radius: 0 8px 8px 0;
-  font-size: 1rem;
-  font-weight: 500;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s;
+  font-size: 1rem;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-button:hover {
-  background: #444;
+button:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
 
-.App.dark button {
-  background: #666;
+button:disabled {
+  background-color: var(--secondary-color);
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
-.App.dark button:hover {
-  background: #888;
+/* Dashboard */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: slideIn 0.5s ease;
 }
 
-/* Table Dashboard */
-.dashboard {
-  width: 100%;
-  max-width: 100%;
-}
-
-h2 {
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: #2a2a2a;
+.dashboard h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
 }
 
-.App.dark h2 {
-  color: #ffffff;
+/* Search Bar */
+.search-bar {
+  position: relative;
+  margin: 2rem 0;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
 }
 
+.dark .search-bar {
+  background: #2a2a2a;
+  box-shadow: var(--dark-shadow);
+}
+
+.search-bar input {
+  flex: 1;
+  margin: 0;
+}
+
+/* Loading Progress */
+.loading-progress {
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.dark .loading-progress {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+/* Table Styles */
 table {
   width: 100%;
-  background: #fff;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border-collapse: collapse;
+  box-shadow: var(--shadow);
+}
+
+.dark table {
+  background: #2a2a2a;
+  box-shadow: var(--dark-shadow);
 }
 
 th, td {
-  padding: 15px;
-  text-align: center;
-  font-size: 1rem;
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
 }
 
-/* Table Action Buttons */
-td button {
-  padding: 8px 16px;
-  background: #2a2a2a;
-  color: #fff;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-td button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
-  background: #444;
-}
-
-.App.dark td button {
-  background: #666;
-}
-
-.App.dark td button:hover {
-  background: #888;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+.dark th, .dark td {
+  border-color: var(--dark-border);
 }
 
 th {
-  background: #f0f0f0;
-  color: #2a2a2a;
-  font-weight: 600;
-}
-
-td {
-  border-bottom: 1px solid #f0f0f0;
-}
-
-tr:last-child td {
-  border-bottom: none;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 500;
 }
 
 tr:hover {
-  background: #fafafa;
+  background-color: rgba(0, 123, 255, 0.05);
 }
 
-.App.dark table {
-  background: #2a2a2a;
-  border-color: #3a3a3a;
+.dark tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
-.App.dark th {
-  background: #3a3a3a;
-  color: #ffffff;
+/* Playlist Container */
+.playlist-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: slideIn 0.5s ease;
 }
 
-.App.dark td {
-  border-bottom-color: #3a3a3a;
-}
-
-.App.dark tr:hover {
-  background: #3a3a3a;
-}
-
-/* Playlist View */
-.back-button {
-  padding: 10px 20px;
-  background: #2a2a2a;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  margin-bottom: 30px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.back-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
-  background: #444;
-}
-
-.App.dark .back-button {
-  background: #666;
-}
-
-.App.dark .back-button:hover {
-  background: #888;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Player Container */
 .player-container {
-  width: 100%;
-  max-width: 1365px;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 2rem 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.dark .player-container {
+  box-shadow: var(--dark-shadow);
 }
 
 .player-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.player-wrapper > div {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 800px;
-  height: 450px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  background: #fff;
-  margin: 0 auto;
+  height: 100%;
 }
 
-.App.dark .player-wrapper {
-  background: #2a2a2a;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Playlist */
+/* Playlist List */
 .playlist {
-  width: 100%;
-  max-width: 100%;
-  background: #fff;
-  padding: 20px;
+  background: white;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  min-width: 0;
-  overflow-wrap: break-word;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.dark .playlist {
+  background: #2a2a2a;
+  box-shadow: var(--dark-shadow);
 }
 
 .playlist h4 {
-  font-size: 1.3rem;
-  font-weight: 500;
-  color: #2a2a2a;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.App.dark .playlist h4 {
-  color: #ffffff;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
 }
 
 .playlist ul {
   list-style: none;
-  max-height: 300px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #ccc #fff;
 }
 
-.App.dark .playlist ul {
-  scrollbar-color: #666 #2a2a2a;
-}
-
-/* Playlist Items */
 .playlist li {
-  padding: 12px 15px;
-  margin: 5px 0;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
   border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  color: var(--light-text);
+}
+
+.dark .playlist li {
+  color: var(--dark-text);
 }
 
 .playlist li:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
-  opacity: 0.9;
-  background: #f0f0f0;
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.dark .playlist li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .playlist li.active {
-  background: #2a2a2a;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .playlist li.watched {
-  color: #888;
-  text-decoration: line-through;
+  opacity: 0.7;
 }
 
-.App.dark .playlist {
-  background: #2a2a2a;
-}
-
-.App.dark .playlist li {
-  background: #2a2a2a;
-  color: #ffffff;
-}
-
-.App.dark .playlist li:hover {
-  background: #3a3a3a;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.App.dark .playlist li.active {
-  background: #444;
-}
-
-.App.dark .playlist li.watched {
-  color: #666;
-}
-
-/* Dark Mode Button */
-.dark-mode-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 12px 24px;
-  background: #2a2a2a;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.dark-mode-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
-  background: #444;
-}
-
-.App.dark .dark-mode-button {
-  background: #666;
-}
-
-.App.dark .dark-mode-button:hover {
-  background: #888;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Logout Button */
-.logout-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 12px 24px;
-  background: #2a2a2a;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.logout-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
-  background: #444;
-}
-
-.App.dark .logout-button {
-  background: #666;
-}
-
-.App.dark .logout-button:hover {
-  background: #888;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Login Page */
-.login-container {
+/* Playlist Header */
+.playlist-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  width: 100%;
-  max-width: 1365px;
-  margin: 0 auto;
-  padding: 40px;
-  background: #f9f9f9;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.App.dark .login-container {
-  background: #1a1a1a;
-}
-
-.login-container h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #2a2a2a;
-  text-align: center;
-  margin-bottom: 30px;
-  max-width: 100%;
-  overflow-wrap: break-word;
-}
-
-.App.dark .login-container h1 {
-  color: #ffffff;
-}
-
-.login-form {
+/* Video List Items */
+.video-info {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.video-number {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  min-width: 2rem;
+}
+
+.video-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.video-duration {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  margin-left: 1rem;
+}
+
+/* Progress Bar Container */
+.progress-bar-container {
   width: 100%;
-  max-width: 400px;
-  gap: 15px;
+  height: 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
 }
 
-.login-label {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  color: #2a2a2a;
-  font-size: 1rem;
-  margin-bottom: 10px;
-  transition: opacity 0.3s ease, color 0.3s ease;
+.dark .progress-bar-container {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.login-label:hover {
-  opacity: 0.9;
-  color: #444;
+.progress-bar-container .progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
 }
 
-.App.dark .login-label {
-  color: #ffffff;
+.progress-bar-container span {
+  position: absolute;
+  right: 0;
+  top: -20px;
+  font-size: 0.8rem;
+  color: var(--secondary-color);
 }
 
-.App.dark .login-label:hover {
-  color: #888;
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.login-input {
-  padding: 12px 20px;
-  width: 100%;
-  margin-bottom: 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background: #fff;
-  color: #2a2a2a;
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.login-input:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
-  border-color: #444;
+/* Error Messages */
+.error-message {
+  color: var(--danger-color);
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  animation: shake 0.5s ease;
 }
 
-.App.dark .login-input {
-  background: #2a2a2a;
-  border-color: #3a3a3a;
-  color: #ffffff;
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
 
-.App.dark .login-input:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  border-color: #666;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container,
+  .playlist-container {
+    padding: 1rem;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .playlist {
+    max-height: 300px;
+  }
+
+  .playlist-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
-.login-input::placeholder {
-  color: #888;
-}
-
-.App.dark .login-input::placeholder {
-  color: #666;
-}
-
-.login-button {
-  padding: 12px 24px;
-  background: #2a2a2a;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 150px;
-}
-
-.login-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
-  background: #444;
-}
-
-.App.dark .login-button {
-  background: #666;
-}
-
-.App.dark .login-button:hover {
-  background: #888;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.error {
-  color: #d32f2f;
-  margin-bottom: 15px;
-  font-size: 1rem;
+/* Footer */
+.footer {
   text-align: center;
-  max-width: 400px;
+  padding: 2rem 0;
+  margin-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--secondary-color);
+  font-size: 0.9rem;
 }
 
-.App.dark .error {
-  color: #f44336;
+.dark .footer {
+  border-color: var(--dark-border);
+  color: #888;
 }

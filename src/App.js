@@ -1,76 +1,67 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
-import useForm from "./useForm";
 import "./App.css";
 
 const BACKEND_URL = "https://youtube-watcher-iwab.onrender.com";
 
-const LoginPage = ({ email, passwordForm, handleLogin, error, theme, onLogout }) => (
-  <div className={`login-container ${theme}`}>
-    <h1>Playlist Watcher</h1>
-    {error && <p className="error">{error}</p>}
-    {email}
-    {passwordForm}
-    <button type="submit" className="login-button" onClick={handleLogin}>
-      Login
-    </button>
-    {onLogout && (
-      <button onClick={onLogout} className="logout-button">
-        Logout
-      </button>
-    )}
-  </div>
-);
-
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem("isLoggedIn") === "true");
   const [playlistUrl, setPlaylistUrl] = useState("");
   const [playlists, setPlaylists] = useState(() => JSON.parse(localStorage.getItem("playlists")) || []);
-  const [currentPlaylistIndex, setCurrentPlaylistIndex] = useState(null);
-  const [currentVideo, setCurrentVideo] = useState(0);
+  const [currentPlaylistIndex, setCurrentPlaylistIndex] = useState(() => {
+    const savedIndex = localStorage.getItem("currentPlaylistIndex");
+    return savedIndex !== null ? parseInt(savedIndex) : null;
+  });
+  const [currentVideo, setCurrentVideo] = useState(() => {
+    const savedVideo = localStorage.getItem("currentVideo");
+    return savedVideo !== null ? parseInt(savedVideo) : 0;
+  });
   const [watched, setWatched] = useState(() => JSON.parse(localStorage.getItem("watched")) || {});
-  const [view, setView] = useState("login");
+  const [view, setView] = useState(() => {
+    const savedView = localStorage.getItem("view");
+    return savedView || "home";
+  });
   const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
   const [error, setError] = useState("");
-
-  const [email, emailForm, setEmail] = useForm("", "Email", "email", "email-input", "email", "email");
-  const [password, passwordForm, setPassword] = useForm("", "Password", "password", "password-input", "password", "current-password");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     localStorage.setItem("playlists", JSON.stringify(playlists));
     localStorage.setItem("watched", JSON.stringify(watched));
     localStorage.setItem("theme", theme);
-    localStorage.setItem("isLoggedIn", isLoggedIn);
+    localStorage.setItem("currentPlaylistIndex", currentPlaylistIndex);
+    localStorage.setItem("currentVideo", currentVideo);
+    localStorage.setItem("view", view);
     document.body.className = theme;
-  }, [playlists, watched, theme, isLoggedIn]);
-
-  const handleLogin = useCallback((e) => {
-    e.preventDefault();
-    if (email.trim() && password.trim()) {
-      setIsLoggedIn(true);
-      setView("home");
-      setError("");
-    } else {
-      setError("Please enter a valid email and password.");
-    }
-  }, [email, password]);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setView("login");
-    setEmail("");
-    setPassword("");
-    setPlaylists([]);
-    setWatched({});
-    setCurrentPlaylistIndex(null);
-    setCurrentVideo(0);
-  };
+  }, [playlists, watched, theme, currentPlaylistIndex, currentVideo, view]);
 
   const handleAddPlaylist = async () => {
     if (!playlistUrl.trim()) {
-      alert("Please enter a YouTube playlist URL.");
+      setError("Please enter a YouTube playlist URL.");
       return;
     }
+
+    // Check if playlist already exists
+    const playlistId = playlistUrl.match(/[?&]list=([^&]+)/)?.[1];
+    if (!playlistId) {
+      setError("Invalid YouTube playlist URL. Please make sure it contains a playlist ID.");
+      return;
+    }
+
+    // Check for duplicates
+    const isDuplicate = playlists.some(playlist => 
+      playlist.videos[0]?.videoId && 
+      playlist.videos[0].videoId.includes(playlistId)
+    );
+
+    if (isDuplicate) {
+      setError("This playlist has already been added.");
+      return;
+    }
+
+    setIsLoading(true);
+    setLoadingProgress(0);
+    setError("");
 
     try {
       const encodedUrl = encodeURIComponent(playlistUrl);
@@ -80,10 +71,12 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! Status: ${response.status}`);
       }
 
       const data = await response.json();
+      setLoadingProgress(100);
 
       if (data.error) {
         throw new Error(data.error);
@@ -96,7 +89,11 @@ function App() {
       setView("playlist");
       setPlaylistUrl("");
     } catch (error) {
-      alert(`Something went wrong: ${error.message}`);
+      setError(error.message);
+      console.error("Error loading playlist:", error);
+    } finally {
+      setIsLoading(false);
+      setLoadingProgress(0);
     }
   };
 
@@ -126,7 +123,7 @@ function App() {
       setCurrentVideo(0);
       setView("playlist");
     } else {
-      alert("Playlist not found.");
+      setError("Playlist not found.");
     }
   };
 
@@ -140,120 +137,186 @@ function App() {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
+  const getPlaylistProgress = (index) => {
+    if (!watched[index]) return 0;
+    const totalVideos = playlists[index].videos.length;
+    const watchedVideos = watched[index].size;
+    return (watchedVideos / totalVideos) * 100;
+  };
+
+  const handleReset = () => {
+    if (window.confirm("Are you sure you want to clear all playlists and progress? This action cannot be undone.")) {
+      setPlaylists([]);
+      setWatched({});
+      setCurrentPlaylistIndex(null);
+      setCurrentVideo(0);
+      setView("home");
+      localStorage.removeItem("playlists");
+      localStorage.removeItem("watched");
+      localStorage.removeItem("currentPlaylistIndex");
+      localStorage.removeItem("currentVideo");
+      setError("");
+    }
+  };
+
   return (
     <div className={`App ${theme}`}>
-      <button className="dark-mode-button" onClick={toggleTheme}>
-        {theme === "light" ? "Dark" : "Light"}
-      </button>
-      {isLoggedIn ? (
-        <>
-          <button onClick={handleLogout} className="logout-button">
-            Logout
+      <header className="header">
+        <div className="header-title">
+          <h1>Playlist Watcher</h1>
+          <span className="creator-name">by YASH BHARDWAJ</span>
+        </div>
+        <div className="header-buttons">
+          <button className="reset-button" onClick={handleReset}>
+            Reset All
           </button>
-          {view === "home" ? (
-            <div className={`dashboard-container ${theme}`}>
-              <h1>Playlist Watcher</h1>
-              <div className="search-bar">
-                <input
-                  type="text"
-                  value={playlistUrl}
-                  onChange={(e) => setPlaylistUrl(e.target.value)}
-                  placeholder="Paste YouTube Playlist URL"
-                />
-                <button onClick={handleAddPlaylist}>Add Playlist</button>
+          <button className="dark-mode-button" onClick={toggleTheme}>
+            {theme === "light" ? "Dark Mode" : "Light Mode"}
+          </button>
+        </div>
+      </header>
+
+      {view === "home" ? (
+        <div className={`dashboard-container ${theme}`}>
+          <div className="search-bar">
+            <input
+              type="text"
+              value={playlistUrl}
+              onChange={(e) => setPlaylistUrl(e.target.value)}
+              placeholder="Paste YouTube Playlist URL"
+              disabled={isLoading}
+            />
+            <button onClick={handleAddPlaylist} disabled={isLoading}>
+              {isLoading ? "Loading..." : "Add Playlist"}
+            </button>
+            {isLoading && (
+              <div className="loading-progress">
+                <div className="progress-bar" style={{ width: `${loadingProgress}%` }}></div>
+                <span>{loadingProgress}%</span>
               </div>
-              <div className="dashboard">
-                <h2>Your Playlists</h2>
-                {playlists.length > 0 ? (
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Total Videos</th>
-                        <th>Total Length (hrs)</th>
-                        <th>Videos Watched</th>
-                        <th>Time Watched (hrs)</th>
-                        <th>Action</th>
+            )}
+            {error && <p className="error-message">{error}</p>}
+          </div>
+          <div className="dashboard">
+            <h2>Your Playlists</h2>
+            {playlists.length > 0 ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Total Videos</th>
+                    <th>Total Length (hrs)</th>
+                    <th>Videos Watched</th>
+                    <th>Time Watched (hrs)</th>
+                    <th>Progress</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {playlists.map((playlist, index) => {
+                    const totalVideos = playlist.videos.length;
+                    const totalDuration = playlist.videos.reduce((sum, video) => sum + video.duration, 0) / 3600;
+                    const watchedVideos = watched[index] ? watched[index].size : 0;
+                    const watchedTime = watched[index]
+                      ? Array.from(watched[index]).reduce((sum, videoIndex) => sum + playlist.videos[videoIndex].duration, 0) / 3600
+                      : 0;
+                    const progress = getPlaylistProgress(index);
+                    return (
+                      <tr key={index}>
+                        <td>{playlist.name}</td>
+                        <td>{totalVideos}</td>
+                        <td>{totalDuration.toFixed(2)}</td>
+                        <td>{watchedVideos}</td>
+                        <td>{watchedTime.toFixed(2)}</td>
+                        <td>
+                          <div className="progress-bar-container">
+                            <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+                            <span>{progress.toFixed(1)}%</span>
+                          </div>
+                        </td>
+                        <td>
+                          <button onClick={() => loadPlaylist(index)}>Play</button>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {playlists.map((playlist, index) => {
-                        const totalVideos = playlist.videos.length;
-                        const totalDuration = playlist.videos.reduce((sum, video) => sum + video.duration, 0) / 3600;
-                        const watchedVideos = watched[index] ? watched[index].size : 0;
-                        const watchedTime = watched[index]
-                          ? Array.from(watched[index]).reduce((sum, videoIndex) => sum + playlist.videos[videoIndex].duration, 0) / 3600
-                          : 0;
-                        return (
-                          <tr key={index}>
-                            <td>{playlist.name}</td>
-                            <td>{totalVideos}</td>
-                            <td>{totalDuration.toFixed(2)}</td>
-                            <td>{watchedVideos}</td>
-                            <td>{watchedTime.toFixed(2)}</td>
-                            <td>
-                              <button onClick={() => loadPlaylist(index)}>Play</button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                ) : (
-                  <p>No playlists added yet.</p>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className={`playlist-container ${theme}`}>
-              {playlists[currentPlaylistIndex] ? (
-                <>
-                  <h1>Now Playing: {playlists[currentPlaylistIndex].videos[currentVideo]?.title || playlists[currentPlaylistIndex].name}</h1>
-                  <button className="back-button" onClick={goBackToHome}>Back to Home</button>
-                  <div className="player-container">
-                    <div className="player-wrapper">
-                      <ReactPlayer
-                        url={`https://www.youtube.com/watch?v=${playlists[currentPlaylistIndex].videos[currentVideo].videoId}`}
-                        controls
-                        width="100%"
-                        height="100%"
-                        onEnded={handleVideoEnd}
-                      />
-                    </div>
-                  </div>
-                  <div className="playlist">
-                    <h4>Playlist</h4>
-                    <ul>
-                      {playlists[currentPlaylistIndex].videos.map((video, index) => (
-                        <li
-                          key={video.videoId}
-                          onClick={() => handleVideoClick(index)}
-                          className={`${index === currentVideo ? "active" : ""} ${watched[currentPlaylistIndex]?.has(index) ? "watched" : ""}`}
-                        >
-                          {video.title}
-                          <span>{formatDuration(video.duration)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </>
-              ) : (
-                <p>No playlist selected. Go back to home to select one.</p>
-              )}
-            </div>
-          )}
-        </>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <p>No playlists added yet.</p>
+            )}
+          </div>
+        </div>
       ) : (
-        <LoginPage email={emailForm} passwordForm={passwordForm} handleLogin={handleLogin} error={error} theme={theme} onLogout={isLoggedIn ? handleLogout : null} />
+        <div className={`playlist-container ${theme}`}>
+          {playlists[currentPlaylistIndex] ? (
+            <>
+              <div className="playlist-header">
+                <h1>Now Playing: {playlists[currentPlaylistIndex].videos[currentVideo]?.title || playlists[currentPlaylistIndex].name}</h1>
+                <button onClick={goBackToHome}>Back to Home</button>
+              </div>
+              <div className="player-container">
+                <div className="player-wrapper">
+                  <ReactPlayer
+                    url={`https://www.youtube.com/watch?v=${playlists[currentPlaylistIndex].videos[currentVideo].videoId}`}
+                    controls
+                    width="100%"
+                    height="100%"
+                    onEnded={handleVideoEnd}
+                    playing
+                    config={{
+                      youtube: {
+                        playerVars: {
+                          modestbranding: 1,
+                          rel: 0,
+                          showinfo: 0,
+                        },
+                      },
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="playlist">
+                <h4>Playlist</h4>
+                <ul>
+                  {playlists[currentPlaylistIndex].videos.map((video, index) => (
+                    <li
+                      key={video.videoId}
+                      onClick={() => handleVideoClick(index)}
+                      className={`${index === currentVideo ? "active" : ""} ${watched[currentPlaylistIndex]?.has(index) ? "watched" : ""}`}
+                    >
+                      <div className="video-info">
+                        <span className="video-number">{index + 1}</span>
+                        <span className="video-title">{video.title}</span>
+                      </div>
+                      <span className="video-duration">{formatDuration(video.duration)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ) : (
+            <p>No playlist selected. Go back to home to select one.</p>
+          )}
+        </div>
       )}
+
+      <footer className="footer">
+        <p>Created by YASH BHARDWAJ</p>
+      </footer>
     </div>
   );
 }
 
 function formatDuration(seconds) {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+  
+  if (hours > 0) {
+    return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
 export default App;
