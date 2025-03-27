@@ -24,7 +24,7 @@ function App() {
         return Object.fromEntries(
           Object.entries(parsed).map(([key, value]) => [
             key,
-            value instanceof Array ? new Set(value) : new Set()
+            Array.isArray(value) ? new Set(value) : new Set()
           ])
         );
       }
