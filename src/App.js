@@ -16,15 +16,23 @@ function App() {
     return savedVideo !== null ? parseInt(savedVideo) : 0;
   });
   const [watched, setWatched] = useState(() => {
-    const savedWatched = localStorage.getItem("watched");
-    if (savedWatched) {
-      const parsed = JSON.parse(savedWatched);
-      // Convert the saved object back to use Sets
-      return Object.fromEntries(
-        Object.entries(parsed).map(([key, value]) => [key, new Set(value)])
-      );
+    try {
+      const savedWatched = localStorage.getItem("watched");
+      if (savedWatched) {
+        const parsed = JSON.parse(savedWatched);
+        // Convert the saved object back to use Sets
+        return Object.fromEntries(
+          Object.entries(parsed).map(([key, value]) => [
+            key,
+            value instanceof Array ? new Set(value) : new Set()
+          ])
+        );
+      }
+      return {};
+    } catch (error) {
+      console.error("Error loading watched state:", error);
+      return {};
     }
-    return {};
   });
   const [view, setView] = useState(() => {
     const savedView = localStorage.getItem("view");
@@ -36,17 +44,24 @@ function App() {
   const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
-    localStorage.setItem("playlists", JSON.stringify(playlists));
-    // Convert Sets to arrays before saving to localStorage
-    const watchedToSave = Object.fromEntries(
-      Object.entries(watched).map(([key, value]) => [key, Array.from(value)])
-    );
-    localStorage.setItem("watched", JSON.stringify(watchedToSave));
-    localStorage.setItem("theme", theme);
-    localStorage.setItem("currentPlaylistIndex", currentPlaylistIndex);
-    localStorage.setItem("currentVideo", currentVideo);
-    localStorage.setItem("view", view);
-    document.body.className = theme;
+    try {
+      localStorage.setItem("playlists", JSON.stringify(playlists));
+      // Convert Sets to arrays before saving to localStorage
+      const watchedToSave = Object.fromEntries(
+        Object.entries(watched).map(([key, value]) => [
+          key,
+          value instanceof Set ? Array.from(value) : []
+        ])
+      );
+      localStorage.setItem("watched", JSON.stringify(watchedToSave));
+      localStorage.setItem("theme", theme);
+      localStorage.setItem("currentPlaylistIndex", currentPlaylistIndex);
+      localStorage.setItem("currentVideo", currentVideo);
+      localStorage.setItem("view", view);
+      document.body.className = theme;
+    } catch (error) {
+      console.error("Error saving state:", error);
+    }
   }, [playlists, watched, theme, currentPlaylistIndex, currentVideo, view]);
 
   const handleAddPlaylist = async () => {
