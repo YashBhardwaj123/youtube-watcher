@@ -15,7 +15,17 @@ function App() {
     const savedVideo = localStorage.getItem("currentVideo");
     return savedVideo !== null ? parseInt(savedVideo) : 0;
   });
-  const [watched, setWatched] = useState(() => JSON.parse(localStorage.getItem("watched")) || {});
+  const [watched, setWatched] = useState(() => {
+    const savedWatched = localStorage.getItem("watched");
+    if (savedWatched) {
+      const parsed = JSON.parse(savedWatched);
+      // Convert the saved object back to use Sets
+      return Object.fromEntries(
+        Object.entries(parsed).map(([key, value]) => [key, new Set(value)])
+      );
+    }
+    return {};
+  });
   const [view, setView] = useState(() => {
     const savedView = localStorage.getItem("view");
     return savedView || "home";
@@ -27,7 +37,11 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("playlists", JSON.stringify(playlists));
-    localStorage.setItem("watched", JSON.stringify(watched));
+    // Convert Sets to arrays before saving to localStorage
+    const watchedToSave = Object.fromEntries(
+      Object.entries(watched).map(([key, value]) => [key, Array.from(value)])
+    );
+    localStorage.setItem("watched", JSON.stringify(watchedToSave));
     localStorage.setItem("theme", theme);
     localStorage.setItem("currentPlaylistIndex", currentPlaylistIndex);
     localStorage.setItem("currentVideo", currentVideo);
