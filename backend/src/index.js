@@ -17,7 +17,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 app.use(express.json());
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://project-playlist-watcher.onrender.com'],
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'https://project-playlist-watcher.onrender.com'],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
 }));
